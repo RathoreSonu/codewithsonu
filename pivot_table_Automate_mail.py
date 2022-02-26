@@ -13,21 +13,15 @@ dat = str(datetime.today()).split()[0]
 dat_2 = str(datetime.today()-timedelta(5)).split()[0]
 
 
-# host = "127.0.0.1"
-# port = 3306
-# db_name = "sonu.hello"
-# user = "root"
-# password= "Ss@1Ss@123"
-
-host = "10.0.0.102"
+host = "127.0.0.1"
 port = 3306
-db_name = "ecomm_v3_db"
-user = "sonurathore"
-password= "P3N5[e9d"
+db_name = "sonu.hello"
+user = "root"
+password= "Ss@@123"
 
 
 
-
+#class for run query
 def getDatafromQuery(query):
     connection = pymysql.connect(host=host, user=user, password=password, db=db_name, charset='utf8mb4', port=port)
     cursor=connection.cursor()
@@ -37,9 +31,10 @@ def getDatafromQuery(query):
     connection.close()
     return dataframe
 
-
+#call the function
 df_scraper_table = getDatafromQuery("select customer,  platform,inserted_date , count(id) from v3_backend_basicecomm_data_table vbbdt where  inserted_date BETWEEN '"+str(dat_2)+"' and '"+str(dat)+"' group by 1,2,3; ")
 
+#pivot Table
 pivot1=pd.pivot_table(df_scraper_table, values='count(id)', index=['customer','platform'], columns='inserted_date', aggfunc='sum', fill_value=0,margins=True, margins_name='grand_total', observed=True)
 
 
@@ -58,7 +53,7 @@ pivot1=pd.pivot_table(df_scraper_table, values='count(id)', index=['customer','p
 pivot1.to_csv(path+'Count_check.csv')
 
 
-
+#attach the database in body
 html="""\
 <html>
    <head>
@@ -75,12 +70,12 @@ html="""\
 
 host = "email-smtp.us-west-2.amazonaws.com"
 port = 587
-username = "AKIAZGM55GEV7LISESFV"
-password = "BGUxze3l4Q+vie/i3aCIluSPkMnBWq8+dZlOneGGg1G8"
+username = "@@@@@@"
+password = "@@@@@@@@@"
 from_email = "<report@mfilterit.com>"
 
-#to = "<sachin@mfilterit.com>","<sonu.rathore@mfilterit.com>"
-to = ["sonu.rathore@mfilterit.com","rishabh.singhal@mfilterit.com"]
+
+to = ["first outlook id","second outlook id"]
 
 OFA_PATH = path
 
@@ -89,9 +84,9 @@ OFA_PATH = path
 msg = MIMEMultipart()
 
 
-msg['From'] = "<report@mfilterit.com>"
-#msg['To'] = ["sachin@mfilterit.com","sonu.rathore@mfilterit.com"]
-msg['To'] = ",".join(to)
+msg['From'] = "<please mention outlook id which you want you send mail>"
+
+msg['To'] = ",".join(to)#it is use mail ids after send mail
 msg['Subject'] = "Ecom_daily_cout_map"
 
 # add in the message body
@@ -123,13 +118,3 @@ server.sendmail(msg['From'], to, msg.as_string())
 server.quit()
 
 print("successfully sent email to %s:" % (msg['To']))
-# print "successfully sent email to %s:" % (msg['Cc'])
-
-
-
-
-
-
-
-# df_scraper_table = getDatafromQuery("select inserted_date,customer,platform,count(*) from  v3_scraper_sos_data_table  where inserted_date between '"+str(dat_2)+"' and '"+str(dat)+"' group by 1,2,3;")
-# df_backend_table = getDatafromQuery("select scraper_inserted_date,customer,platform,count(*) from  v3_backend_sos_data_table   where scraper_inserted_date between '"+str(dat_2)+"' and '"+str(dat)+"'  group by 1,2,3;")
