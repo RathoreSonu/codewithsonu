@@ -17,10 +17,10 @@ for i in df['url']:
 #append the values of p in list
     ls.append(p)
 df['new_hash']=ls
-#check the output
+# printing the equivalent hexadecimal value.
 print(df['new_hash'])
 #store data
 df.to_excel(r'C:\Users\sonum\OneDrive\Documents\2.Google_Cleaning_Raw_Data\1.Body_Care_till_18Jan.xlsx', index=False)
   
-# printing the equivalent hexadecimal value.
+
 
